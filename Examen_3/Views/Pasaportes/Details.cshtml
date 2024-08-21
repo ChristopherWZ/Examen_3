@@ -1,0 +1,51 @@
+﻿@model Examen_3.Pasaporte
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pasaporte</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroPasaporte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroPasaporte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaEmision)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaEmision)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaExpiracion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaExpiracion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Viajero.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Viajero.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PasaporteId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

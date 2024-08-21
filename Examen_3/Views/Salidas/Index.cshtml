@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Examen_3.Salida>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaSalida)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LugarSalida)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Viajero.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaSalida)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LugarSalida)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Viajero.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SalidaId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SalidaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SalidaId })
+        </td>
+    </tr>
+}
+
+</table>

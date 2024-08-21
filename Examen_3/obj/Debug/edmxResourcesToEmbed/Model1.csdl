@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MigracionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Entrada">
+    <Key>
+      <PropertyRef Name="EntradaId" />
+    </Key>
+    <Property Name="EntradaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ViajeroId" Type="Int32" />
+    <Property Name="FechaEntrada" Type="DateTime" Precision="0" />
+    <Property Name="LugarEntrada" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Viajero" Relationship="Self.FK_ViajeroId2" FromRole="Entradas" ToRole="Viajeros" />
+  </EntityType>
+  <EntityType Name="Pasaporte">
+    <Key>
+      <PropertyRef Name="PasaporteId" />
+    </Key>
+    <Property Name="PasaporteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumeroPasaporte" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="FechaEmision" Type="DateTime" Precision="0" />
+    <Property Name="FechaExpiracion" Type="DateTime" Precision="0" />
+    <Property Name="ViajeroId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Viajero" Relationship="Self.FK_ViajeroId" FromRole="Pasaportes" ToRole="Viajeros" />
+  </EntityType>
+  <EntityType Name="Salida">
+    <Key>
+      <PropertyRef Name="SalidaId" />
+    </Key>
+    <Property Name="SalidaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ViajeroId" Type="Int32" Nullable="false" />
+    <Property Name="FechaSalida" Type="DateTime" Precision="0" />
+    <Property Name="LugarSalida" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Viajero" Relationship="Self.FK_ViajeroId3" FromRole="Salidas" ToRole="Viajeros" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Viajero">
+    <Key>
+      <PropertyRef Name="ViajeroId" />
+    </Key>
+    <Property Name="ViajeroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Entradas" Relationship="Self.FK_ViajeroId2" FromRole="Viajeros" ToRole="Entradas" />
+    <NavigationProperty Name="Pasaportes" Relationship="Self.FK_ViajeroId" FromRole="Viajeros" ToRole="Pasaportes" />
+    <NavigationProperty Name="Salidas" Relationship="Self.FK_ViajeroId3" FromRole="Viajeros" ToRole="Salidas" />
+  </EntityType>
+  <Association Name="FK_ViajeroId2">
+    <End Role="Viajeros" Type="Self.Viajero" Multiplicity="0..1" />
+    <End Role="Entradas" Type="Self.Entrada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="ViajeroId" />
+      </Principal>
+      <Dependent Role="Entradas">
+        <PropertyRef Name="ViajeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ViajeroId">
+    <End Role="Viajeros" Type="Self.Viajero" Multiplicity="1" />
+    <End Role="Pasaportes" Type="Self.Pasaporte" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="ViajeroId" />
+      </Principal>
+      <Dependent Role="Pasaportes">
+        <PropertyRef Name="ViajeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ViajeroId3">
+    <End Role="Viajeros" Type="Self.Viajero" Multiplicity="1" />
+    <End Role="Salidas" Type="Self.Salida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="ViajeroId" />
+      </Principal>
+      <Dependent Role="Salidas">
+        <PropertyRef Name="ViajeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MigracionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Entradas" EntityType="Self.Entrada" />
+    <EntitySet Name="Pasaportes" EntityType="Self.Pasaporte" />
+    <EntitySet Name="Salidas" EntityType="Self.Salida" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+    <EntitySet Name="Viajeros" EntityType="Self.Viajero" />
+    <AssociationSet Name="FK_ViajeroId2" Association="Self.FK_ViajeroId2">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Entradas" EntitySet="Entradas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ViajeroId" Association="Self.FK_ViajeroId">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Pasaportes" EntitySet="Pasaportes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ViajeroId3" Association="Self.FK_ViajeroId3">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Salidas" EntitySet="Salidas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

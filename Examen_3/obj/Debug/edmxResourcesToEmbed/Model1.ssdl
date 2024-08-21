@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MigracionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Entradas">
+    <Key>
+      <PropertyRef Name="EntradaId" />
+    </Key>
+    <Property Name="EntradaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ViajeroId" Type="int" />
+    <Property Name="FechaEntrada" Type="date" />
+    <Property Name="LugarEntrada" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Pasaportes">
+    <Key>
+      <PropertyRef Name="PasaporteId" />
+    </Key>
+    <Property Name="PasaporteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NumeroPasaporte" Type="nvarchar" MaxLength="20" />
+    <Property Name="FechaEmision" Type="date" />
+    <Property Name="FechaExpiracion" Type="date" />
+    <Property Name="ViajeroId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Salidas">
+    <Key>
+      <PropertyRef Name="SalidaId" />
+    </Key>
+    <Property Name="SalidaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ViajeroId" Type="int" Nullable="false" />
+    <Property Name="FechaSalida" Type="date" />
+    <Property Name="LugarSalida" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" />
+    <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Viajeros">
+    <Key>
+      <PropertyRef Name="ViajeroId" />
+    </Key>
+    <Property Name="ViajeroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaNacimiento" Type="date" />
+    <Property Name="Nacionalidad" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ViajeroId">
+    <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="1" />
+    <End Role="Pasaportes" Type="Self.Pasaportes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="ViajeroId" />
+      </Principal>
+      <Dependent Role="Pasaportes">
+        <PropertyRef Name="ViajeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ViajeroId2">
+    <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="0..1" />
+    <End Role="Entradas" Type="Self.Entradas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="ViajeroId" />
+      </Principal>
+      <Dependent Role="Entradas">
+        <PropertyRef Name="ViajeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ViajeroId3">
+    <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="1" />
+    <End Role="Salidas" Type="Self.Salidas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="ViajeroId" />
+      </Principal>
+      <Dependent Role="Salidas">
+        <PropertyRef Name="ViajeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MigracionModelStoreContainer">
+    <EntitySet Name="Entradas" EntityType="Self.Entradas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pasaportes" EntityType="Self.Pasaportes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Salidas" EntityType="Self.Salidas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Viajeros" EntityType="Self.Viajeros" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ViajeroId" Association="Self.FK_ViajeroId">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Pasaportes" EntitySet="Pasaportes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ViajeroId2" Association="Self.FK_ViajeroId2">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Entradas" EntitySet="Entradas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ViajeroId3" Association="Self.FK_ViajeroId3">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Salidas" EntitySet="Salidas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

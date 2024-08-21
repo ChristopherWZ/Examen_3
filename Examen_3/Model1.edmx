@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MigracionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Entradas">
+          <Key>
+            <PropertyRef Name="EntradaId" />
+          </Key>
+          <Property Name="EntradaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ViajeroId" Type="int" />
+          <Property Name="FechaEntrada" Type="date" />
+          <Property Name="LugarEntrada" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Pasaportes">
+          <Key>
+            <PropertyRef Name="PasaporteId" />
+          </Key>
+          <Property Name="PasaporteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroPasaporte" Type="nvarchar" MaxLength="20" />
+          <Property Name="FechaEmision" Type="date" />
+          <Property Name="FechaExpiracion" Type="date" />
+          <Property Name="ViajeroId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salidas">
+          <Key>
+            <PropertyRef Name="SalidaId" />
+          </Key>
+          <Property Name="SalidaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ViajeroId" Type="int" Nullable="false" />
+          <Property Name="FechaSalida" Type="date" />
+          <Property Name="LugarSalida" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Viajeros">
+          <Key>
+            <PropertyRef Name="ViajeroId" />
+          </Key>
+          <Property Name="ViajeroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Nacionalidad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ViajeroId">
+          <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="1" />
+          <End Role="Pasaportes" Type="Self.Pasaportes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viajeros">
+              <PropertyRef Name="ViajeroId" />
+            </Principal>
+            <Dependent Role="Pasaportes">
+              <PropertyRef Name="ViajeroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ViajeroId2">
+          <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="0..1" />
+          <End Role="Entradas" Type="Self.Entradas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viajeros">
+              <PropertyRef Name="ViajeroId" />
+            </Principal>
+            <Dependent Role="Entradas">
+              <PropertyRef Name="ViajeroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ViajeroId3">
+          <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="1" />
+          <End Role="Salidas" Type="Self.Salidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viajeros">
+              <PropertyRef Name="ViajeroId" />
+            </Principal>
+            <Dependent Role="Salidas">
+              <PropertyRef Name="ViajeroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MigracionModelStoreContainer">
+          <EntitySet Name="Entradas" EntityType="Self.Entradas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pasaportes" EntityType="Self.Pasaportes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salidas" EntityType="Self.Salidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Viajeros" EntityType="Self.Viajeros" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ViajeroId" Association="Self.FK_ViajeroId">
+            <End Role="Viajeros" EntitySet="Viajeros" />
+            <End Role="Pasaportes" EntitySet="Pasaportes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViajeroId2" Association="Self.FK_ViajeroId2">
+            <End Role="Viajeros" EntitySet="Viajeros" />
+            <End Role="Entradas" EntitySet="Entradas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViajeroId3" Association="Self.FK_ViajeroId3">
+            <End Role="Viajeros" EntitySet="Viajeros" />
+            <End Role="Salidas" EntitySet="Salidas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MigracionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Entrada">
+          <Key>
+            <PropertyRef Name="EntradaId" />
+          </Key>
+          <Property Name="EntradaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ViajeroId" Type="Int32" />
+          <Property Name="FechaEntrada" Type="DateTime" Precision="0" />
+          <Property Name="LugarEntrada" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Viajero" Relationship="Self.FK_ViajeroId2" FromRole="Entradas" ToRole="Viajeros" />
+        </EntityType>
+        <EntityType Name="Pasaporte">
+          <Key>
+            <PropertyRef Name="PasaporteId" />
+          </Key>
+          <Property Name="PasaporteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroPasaporte" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FechaEmision" Type="DateTime" Precision="0" />
+          <Property Name="FechaExpiracion" Type="DateTime" Precision="0" />
+          <Property Name="ViajeroId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Viajero" Relationship="Self.FK_ViajeroId" FromRole="Pasaportes" ToRole="Viajeros" />
+        </EntityType>
+        <EntityType Name="Salida">
+          <Key>
+            <PropertyRef Name="SalidaId" />
+          </Key>
+          <Property Name="SalidaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ViajeroId" Type="Int32" Nullable="false" />
+          <Property Name="FechaSalida" Type="DateTime" Precision="0" />
+          <Property Name="LugarSalida" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Viajero" Relationship="Self.FK_ViajeroId3" FromRole="Salidas" ToRole="Viajeros" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Viajero">
+          <Key>
+            <PropertyRef Name="ViajeroId" />
+          </Key>
+          <Property Name="ViajeroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Entradas" Relationship="Self.FK_ViajeroId2" FromRole="Viajeros" ToRole="Entradas" />
+          <NavigationProperty Name="Pasaportes" Relationship="Self.FK_ViajeroId" FromRole="Viajeros" ToRole="Pasaportes" />
+          <NavigationProperty Name="Salidas" Relationship="Self.FK_ViajeroId3" FromRole="Viajeros" ToRole="Salidas" />
+        </EntityType>
+        <Association Name="FK_ViajeroId2">
+          <End Role="Viajeros" Type="Self.Viajero" Multiplicity="0..1" />
+          <End Role="Entradas" Type="Self.Entrada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viajeros">
+              <PropertyRef Name="ViajeroId" />
+            </Principal>
+            <Dependent Role="Entradas">
+              <PropertyRef Name="ViajeroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ViajeroId">
+          <End Role="Viajeros" Type="Self.Viajero" Multiplicity="1" />
+          <End Role="Pasaportes" Type="Self.Pasaporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viajeros">
+              <PropertyRef Name="ViajeroId" />
+            </Principal>
+            <Dependent Role="Pasaportes">
+              <PropertyRef Name="ViajeroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ViajeroId3">
+          <End Role="Viajeros" Type="Self.Viajero" Multiplicity="1" />
+          <End Role="Salidas" Type="Self.Salida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viajeros">
+              <PropertyRef Name="ViajeroId" />
+            </Principal>
+            <Dependent Role="Salidas">
+              <PropertyRef Name="ViajeroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MigracionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Entradas" EntityType="Self.Entrada" />
+          <EntitySet Name="Pasaportes" EntityType="Self.Pasaporte" />
+          <EntitySet Name="Salidas" EntityType="Self.Salida" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <EntitySet Name="Viajeros" EntityType="Self.Viajero" />
+          <AssociationSet Name="FK_ViajeroId2" Association="Self.FK_ViajeroId2">
+            <End Role="Viajeros" EntitySet="Viajeros" />
+            <End Role="Entradas" EntitySet="Entradas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViajeroId" Association="Self.FK_ViajeroId">
+            <End Role="Viajeros" EntitySet="Viajeros" />
+            <End Role="Pasaportes" EntitySet="Pasaportes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViajeroId3" Association="Self.FK_ViajeroId3">
+            <End Role="Viajeros" EntitySet="Viajeros" />
+            <End Role="Salidas" EntitySet="Salidas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MigracionModelStoreContainer" CdmEntityContainer="MigracionEntities">
+          <EntitySetMapping Name="Entradas">
+            <EntityTypeMapping TypeName="MigracionModel.Entrada">
+              <MappingFragment StoreEntitySet="Entradas">
+                <ScalarProperty Name="EntradaId" ColumnName="EntradaId" />
+                <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+                <ScalarProperty Name="FechaEntrada" ColumnName="FechaEntrada" />
+                <ScalarProperty Name="LugarEntrada" ColumnName="LugarEntrada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pasaportes">
+            <EntityTypeMapping TypeName="MigracionModel.Pasaporte">
+              <MappingFragment StoreEntitySet="Pasaportes">
+                <ScalarProperty Name="PasaporteId" ColumnName="PasaporteId" />
+                <ScalarProperty Name="NumeroPasaporte" ColumnName="NumeroPasaporte" />
+                <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
+                <ScalarProperty Name="FechaExpiracion" ColumnName="FechaExpiracion" />
+                <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salidas">
+            <EntityTypeMapping TypeName="MigracionModel.Salida">
+              <MappingFragment StoreEntitySet="Salidas">
+                <ScalarProperty Name="SalidaId" ColumnName="SalidaId" />
+                <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+                <ScalarProperty Name="LugarSalida" ColumnName="LugarSalida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="MigracionModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Viajeros">
+            <EntityTypeMapping TypeName="MigracionModel.Viajero">
+              <MappingFragment StoreEntitySet="Viajeros">
+                <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

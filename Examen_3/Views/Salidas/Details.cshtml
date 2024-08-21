@@ -1,0 +1,43 @@
+﻿@model Examen_3.Salida
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Salida</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaSalida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaSalida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LugarSalida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LugarSalida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Viajero.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Viajero.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SalidaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

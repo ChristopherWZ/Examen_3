@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="~/Content/Menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Botón del menú lateral -->
+                <span class="btn" title="Menu"><i class="fas fa-bars"></i></span>
+                @Html.ActionLink("Sistema de Migración", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="navbar-text">Bienvenido, @User.Identity.Name</li>
+                        <li>
+                            @Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "btn btn-default navbar-btn btn-smaller" })
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    @if (Request.IsAuthenticated)
+    {
+       <div class="sidenav">
+           <div class="items">
+               <ul>
+                   <li><a href="@Url.Action("Index", "Viajeros")">Viajeros</a></li>
+                   <li><a href="@Url.Action("Index", "Pasaportes")">Pasaportes</a></li>
+                   <li><a href="@Url.Action("Index", "Entradas")">Entradas</a></li>
+                   <li><a href="@Url.Action("Index", "Salidas")">Salidas</a></li>
+               </ul>
+           </div>
+       </div>
+    }
+    else
+    {
+<div class="sidenav">
+    <div class="items">
+        <ul>
+            <li><a href="@Url.Action("Index", "Home")" > <h3>Debes iniciar sesion</h3>  </a></li>
+
+        </ul>
+    </div>
+</div>
+    }
+
+    
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        const btn = document.querySelector(".btn");
+
+        btn.addEventListener("click", () => {
+            document.body.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>

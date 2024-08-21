@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MigracionModelStoreContainer" CdmEntityContainer="MigracionEntities">
+    <EntitySetMapping Name="Entradas">
+      <EntityTypeMapping TypeName="MigracionModel.Entrada">
+        <MappingFragment StoreEntitySet="Entradas">
+          <ScalarProperty Name="EntradaId" ColumnName="EntradaId" />
+          <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+          <ScalarProperty Name="FechaEntrada" ColumnName="FechaEntrada" />
+          <ScalarProperty Name="LugarEntrada" ColumnName="LugarEntrada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pasaportes">
+      <EntityTypeMapping TypeName="MigracionModel.Pasaporte">
+        <MappingFragment StoreEntitySet="Pasaportes">
+          <ScalarProperty Name="PasaporteId" ColumnName="PasaporteId" />
+          <ScalarProperty Name="NumeroPasaporte" ColumnName="NumeroPasaporte" />
+          <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
+          <ScalarProperty Name="FechaExpiracion" ColumnName="FechaExpiracion" />
+          <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Salidas">
+      <EntityTypeMapping TypeName="MigracionModel.Salida">
+        <MappingFragment StoreEntitySet="Salidas">
+          <ScalarProperty Name="SalidaId" ColumnName="SalidaId" />
+          <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+          <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+          <ScalarProperty Name="LugarSalida" ColumnName="LugarSalida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="MigracionModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Viajeros">
+      <EntityTypeMapping TypeName="MigracionModel.Viajero">
+        <MappingFragment StoreEntitySet="Viajeros">
+          <ScalarProperty Name="ViajeroId" ColumnName="ViajeroId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

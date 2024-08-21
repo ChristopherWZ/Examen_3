@@ -1,0 +1,34 @@
+﻿@model Examen_3.Models.LoginViewModel
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username)
+        @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Username)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PasswordHash)
+        @Html.PasswordFor(model => model.PasswordHash, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.PasswordHash)
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Login</button>
+        <a href="@Url.Action("Register", "Account")" class="btn" style="color: black; font-size: 0.9em;">Registrar si todavia no tienes cuenta</a>
+    </div>
+
+    
+}
+
